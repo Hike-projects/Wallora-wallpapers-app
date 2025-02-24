@@ -18,6 +18,11 @@
       },
       "package": "com.mrbenns.Wallorawallpapersapp"
     },
+    "androidNavigationBar": {
+      "backgroundColor": "#00000000",
+      "barStyle": "light-content",
+      "visible": "leanback"
+    },
     "web": {
       "bundler": "metro",
       "output": "static",
