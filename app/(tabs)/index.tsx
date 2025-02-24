@@ -2,7 +2,6 @@ import React from 'react';
 import { Image, StyleSheet, FlatList, TouchableOpacity, Platform } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
 
 const wallpapers = [
   { id: '1', source: require('@/assets/images/wallpapers/wallpaper1.jpg') },
@@ -12,14 +11,7 @@ const wallpapers = [
 
 export default function HomeScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
+    <ThemedView style={styles.container}>
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Wallpapers</ThemedText>
       </ThemedView>
@@ -34,22 +26,20 @@ export default function HomeScreen() {
         numColumns={2}
         contentContainerStyle={styles.wallpaperList}
       />
-    </ParallaxScrollView>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white', // Change the background color if needed
+    paddingTop: Platform.OS === 'ios' ? 60 : 40, // Adjust padding for status bar
+  },
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
   },
   wallpaperList: {
     padding: 16,
