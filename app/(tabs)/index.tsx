@@ -1,9 +1,14 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
+import React from 'react';
+import { Image, StyleSheet, FlatList, TouchableOpacity, Platform } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import ParallaxScrollView from '@/components/ParallaxScrollView';
+
+const wallpapers = [
+  { id: '1', source: require('@/assets/images/wallpaper1.jpg') },
+  { id: '2', source: require('@/assets/images/wallpaper2.jpg') },
+  // Add more wallpapers here
+];
 
 export default function HomeScreen() {
   return (
@@ -16,40 +21,19 @@ export default function HomeScreen() {
         />
       }>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
+        <ThemedText type="title">Wallpapers</ThemedText>
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
+      <FlatList
+        data={wallpapers}
+        renderItem={({ item }) => (
+          <TouchableOpacity style={styles.wallpaperContainer}>
+            <Image source={item.source} style={styles.wallpaper} />
+          </TouchableOpacity>
+        )}
+        keyExtractor={item => item.id}
+        numColumns={2}
+        contentContainerStyle={styles.wallpaperList}
+      />
     </ParallaxScrollView>
   );
 }
@@ -60,15 +44,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
   reactLogo: {
     height: 178,
     width: 290,
     bottom: 0,
     left: 0,
     position: 'absolute',
+  },
+  wallpaperList: {
+    padding: 16,
+  },
+  wallpaperContainer: {
+    flex: 1,
+    margin: 8,
+  },
+  wallpaper: {
+    width: '100%',
+    height: 200,
+    borderRadius: 8,
   },
 });
