@@ -1,156 +1,74 @@
-import React, { useEffect, useState } from 'react';
-import {
-  View,
-  FlatList,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  Alert,
-  Button,
-} from 'react-native';
-import * as Updates from 'expo-updates';
+import { Image, StyleSheet, Platform } from 'react-native';
 
+import { HelloWave } from '@/components/HelloWave';
+import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
-// Sample wallpapers array; update these image paths as needed.
-const wallpapers = [
-  { id: '1', source: require('@/assets/images/wallpaper1.jpg') },
-  { id: '2', source: require('@/assets/images/wallpaper2.jpg') },
-  { id: '3', source: require('@/assets/images/wallpaper3.jpg') },
-  // Add more wallpapers as needed.
-];
-
-// Placeholder download handler; replace with your actual download logic.
-const handleDownload = (item: { id: string; source: number }) => {
-  Alert.alert('Download', `Downloading wallpaper ${item.id}`);
-  // Implement your download functionality here.
-};
-
 export default function HomeScreen() {
-  const [updateMessage, setUpdateMessage] = useState<string | null>(null);
-
-  // Check for updates on mount using expo-updates.
-  useEffect(() => {
-    async function checkUpdates() {
-      try {
-        const update = await Updates.checkForUpdateAsync();
-        if (update.isAvailable) {
-          setUpdateMessage('Update available! Downloading...');
-          await Updates.fetchUpdateAsync();
-          setUpdateMessage('Update downloaded. Restarting app...');
-          // Reload the app to apply the update.
-          await Updates.reloadAsync();
-        } else {
-          setUpdateMessage('App is up to date.');
-        }
-      } catch (e) {
-        console.error('Error checking for OTA update:', e);
-        setUpdateMessage('Error checking for updates.');
-      }
-    }
-    checkUpdates();
-  }, []);
-
-  // Optional manual update trigger.
-  const handleManualUpdate = async () => {
-    try {
-      setUpdateMessage('Checking for update...');
-      const update = await Updates.checkForUpdateAsync();
-      if (update.isAvailable) {
-        setUpdateMessage('Update available! Downloading...');
-        await Updates.fetchUpdateAsync();
-        setUpdateMessage('Update downloaded. Restarting app...');
-        await Updates.reloadAsync();
-      } else {
-        setUpdateMessage('No updates available.');
-      }
-    } catch (e) {
-      console.error('Manual update error:', e);
-      setUpdateMessage('Error checking for updates.');
-    }
-  };
-
-  const renderItem = ({ item }: { item: { id: string; source: number } }) => (
-    <View style={styles.itemContainer}>
-      <Image source={item.source} style={styles.wallpaperImage} />
-      <TouchableOpacity
-        style={styles.downloadButton}
-        onPress={() => handleDownload(item)}>
-        <ThemedText style={styles.downloadButtonText}>Download</ThemedText>
-      </TouchableOpacity>
-    </View>
-  );
-
   return (
-    <ThemedView style={styles.container}>
-      <ThemedText type="header" style={styles.headerText}>
-        Wallpapers Gallery
-      </ThemedText>
-
-      {updateMessage && (
-        <View style={styles.updateMessageContainer}>
-          <ThemedText>{updateMessage}</ThemedText>
-        </View>
-      )}
-
-      {/* Manual Update Button */}
-      <View style={styles.manualUpdateContainer}>
-        <Button title="Check for Updates" onPress={handleManualUpdate} />
-      </View>
-
-      <FlatList
-        data={wallpapers}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-        numColumns={2}
-        contentContainerStyle={styles.gallery}
-      />
-    </ThemedView>
+    <ParallaxScrollView
+      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
+      headerImage={
+        <Image
+          source={require('@/assets/images/partial-react-logo.png')}
+          style={styles.reactLogo}
+        />
+      }>
+      <ThemedView style={styles.titleContainer}>
+        <ThemedText type="title">Welcome!</ThemedText>
+        <HelloWave />
+      </ThemedView>
+      <ThemedView style={styles.stepContainer}>
+        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
+        <ThemedText>
+          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
+          Press{' '}
+          <ThemedText type="defaultSemiBold">
+            {Platform.select({
+              ios: 'cmd + d',
+              android: 'cmd + m',
+              web: 'F12'
+            })}
+          </ThemedText>{' '}
+          to open developer tools.
+        </ThemedText>
+      </ThemedView>
+      <ThemedView style={styles.stepContainer}>
+        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
+        <ThemedText>
+          Tap the Explore tab to learn more about what's included in this starter app.
+        </ThemedText>
+      </ThemedView>
+      <ThemedView style={styles.stepContainer}>
+        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
+        <ThemedText>
+          When you're ready, run{' '}
+          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
+          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
+          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
+          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
+        </ThemedText>
+      </ThemedView>
+    </ParallaxScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    padding: 16,
-  },
-  headerText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 16,
-    textAlign: 'center',
-  },
-  updateMessageContainer: {
+  titleContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 16,
+    gap: 8,
   },
-  manualUpdateContainer: {
-    marginBottom: 16,
-    alignItems: 'center',
+  stepContainer: {
+    gap: 8,
+    marginBottom: 8,
   },
-  gallery: {
-    justifyContent: 'center',
-  },
-  itemContainer: {
-    margin: 8,
-    alignItems: 'center',
-  },
-  wallpaperImage: {
-    width: 150,
-    height: 250,
-    borderRadius: 8,
-  },
-  downloadButton: {
-    marginTop: 8,
-    backgroundColor: '#007bff',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 4,
-  },
-  downloadButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
+  reactLogo: {
+    height: 178,
+    width: 290,
+    bottom: 0,
+    left: 0,
+    position: 'absolute',
   },
 });
