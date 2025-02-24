@@ -5,8 +5,9 @@ import { ThemedView } from '@/components/ThemedView';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 
 const wallpapers = [
-  { id: '1', source: require('@/assets/images/wallpaper1.jpg') },
-  { id: '2', source: require('@/assets/images/wallpaper2.jpg') },
+  { id: '1', source: require('@/assets/images/wallpapers/wallpaper1.jpg') },
+  { id: '2', source: require('@/assets/images/wallpapers/wallpaper2.jpg') },
+  // Add more wallpapers here
 ];
 
 export default function HomeScreen() {
