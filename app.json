@@ -4,7 +4,7 @@
     "slug": "Wallora-wallpapers-app",
     "version": "2.0.1",
     "orientation": "portrait",
-    "icon": "./assets/images/wallora-logo.jpg",
+    "icon": "./assets/images/wallora-logo.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -17,16 +17,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/wallora-logo.jpg",
+        "foregroundImage": "./assets/images/wallora-logo.png",
         
       },
       "package": "com.mrbenns.Wallorawallpapersapp"
     },
-    "androidNavigationBar": {
-      "backgroundColor": "transparent",
-      "barStyle": "light-content",
-      "visible": "leanback"
-    },
+    
     "web": {
       "bundler": "metro",
       "output": "static",
@@ -37,7 +33,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/wallora-logo.jpg",
+          "image": "./assets/images/wallora-logo.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
