@@ -16,13 +16,12 @@
       }
     },
     "android": {
+      "package": "com.mrbenns.Wallorawallpapersapp",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/wallora-logo.png",
-        
-      },
-      "package": "com.mrbenns.Wallorawallpapersapp"
+        "backgroundColor": "#ffffff"
+      }
     },
-    
     "web": {
       "bundler": "metro",
       "output": "static",
@@ -50,6 +49,11 @@
       "eas": {
         "projectId": "7f447a50-e053-4bf9-84c1-d4686cbbbbe9"
       }
+    },
+    "updates": {
+      "enabled": true,
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 30000
     }
   }
 }
