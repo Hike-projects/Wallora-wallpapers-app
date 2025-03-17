@@ -2,7 +2,7 @@
   "expo": {
     "name": "Wallora",
     "slug": "Wallora-wallpapers-app",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "orientation": "portrait",
     "icon": "./assets/images/wallora-logo.png",
     "scheme": "myapp",
@@ -12,11 +12,16 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.mrbenns.Wallorawallpapersapp",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSPhotoLibraryAddUsageDescription": "Allow the app to save wallpapers to your photo library."
       }
     },
     "android": {
       "package": "com.mrbenns.Wallorawallpapersapp",
+      "permissions": [
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/wallora-logo.png",
         "backgroundColor": "#ffffff"
